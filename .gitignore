@@ -1,0 +1,22 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Large model checkpoints & cache (keep folder structure via .gitkeep)
+models/fine_tuned/*
+!models/fine_tuned/.gitkeep
+*.safetensors
+*.bin
+*.pt
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
