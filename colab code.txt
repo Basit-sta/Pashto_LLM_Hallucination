@@ -1,0 +1,37 @@
+!git clone https://github.com
+%cd Pashto_LLM_Hallucination
+!pip install -q bitsandbytes peft accelerate datasets evaluate bert-score rouge-score
+
+
+import os
+repo_url = "https://github.com/" + "Basit-sta/Pashto_LLM_Hallucination.git"
+os.system(f"git clone {repo_url}")
+%cd Pashto_LLM_Hallucination
+!ls -la
+
+
+
+!python src/train.py --model_name "Qwen/Qwen2.5-3B-Instruct" --epochs 3
+
+
+
+
+import json
+from google.colab import files
+
+with open("results/baseline_predictions.jsonl", encoding="utf-8") as f:
+    base = [json.loads(line) for line in f]
+with open("results/finetuned_predictions.jsonl", encoding="utf-8") as f:
+    ft = [json.loads(line) for line in f]
+
+for b, t in zip(base, ft):
+    print("=" * 70)
+    print(f"ID: {b['id']} | Topic: {b['topic']} | Evidence Sufficient: {b['evidence_sufficient']}")
+    print(f"Question   : {b['question']}")
+    print(f"Reference  : {b['reference_answer']}")
+    print(f"Base Model : {b['model_answer']}")
+    print(f"Fine-Tuned : {t['model_answer']}")
+
+# Zip and download results + fine-tuned adapter so nothing is lost
+!zip -r -q experiment_outputs.zip results/ models/fine_tuned/pashto_qlora_adapter/
+files.download("experiment_outputs.zip")
