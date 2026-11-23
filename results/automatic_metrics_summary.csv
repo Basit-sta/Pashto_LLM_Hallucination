@@ -1,0 +1,3 @@
+﻿Condition,total_samples,pashto_token_f1,pashto_rougeL,bertscore_f1,abstention_accuracy,false_refusal_rate
+Condition A (Base Model),4,0.4552,0.4608,Skipped (use --bertscore),1.0,0.0
+Condition B (QLoRA Fine-Tuned),4,0.5608,0.5786,Skipped (use --bertscore),0.0,0.0
